@@ -1,0 +1,334 @@
+openapi: 3.0.1
+info:
+  title: Microservicio de Cuentas Bancarias
+  version: 1.0.0
+  description: |
+    Microservicio para gestionar y administrar cuentas bancarias de clientes, permitiendo crear, obtener, actualizar y eliminar cuentas, así como realizar movimientos como depósitos y retiros.
+  termsOfService: https://www.example.com/terms
+  contact:
+    email: vertkle@gmail.com
+  license:
+    name: Licencia MIT
+    url: https://www.example.com/license
+servers:
+  - url: http://localhost:8080/api/v1
+
+paths:
+  /accounts:
+    get:
+      operationId: getAllAccounts
+      summary: Obtener cuentas bancarias
+      tags:
+        - Cuentas Bancarias
+      responses:
+        '200':
+          description: Lista de cuentas bancarias obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+    post:
+      operationId: createAccount
+      summary: Agregar cuenta bancaria
+      tags:
+        - Cuentas Bancarias
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '201':
+          description: Cuenta bancaria creada exitosamente
+        '400':
+          description: Error en Request
+    put:
+      operationId: updateAccount
+      summary: Actualizar cuenta bancaria
+      tags:
+        - Cuentas Bancarias
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Cuenta bancaria actualizada exitosamente
+        '400':
+          description: Error en Request
+        '404':
+          description: Recurso no encontrado
+
+  /accounts/{account_id}:
+    get:
+      operationId: getAccountById
+      summary: Obtener detalle de cuenta bancaria
+      tags:
+        - Cuentas Bancarias
+      parameters:
+        - name: account_id
+          in: path
+          description: ID de la cuenta bancaria
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalle de cuenta bancaria obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+    delete:
+      operationId: deleteAccountById
+      summary: Eliminar cuenta bancaria
+      tags:
+        - Cuentas Bancarias
+      parameters:
+        - name: account_id
+          in: path
+          description: ID de la cuenta bancaria
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cuenta bancaria eliminada exitosamente
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+  /accounts/customer/{customer_id}:
+    get:
+      operationId: getAccountsByCustomerId
+      summary: Obtener cuentas bancarias por cliente
+      tags:
+        - Cuentas Bancarias
+      parameters:
+        - name: customer_id
+          in: path
+          description: ID del cliente
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalle de cuenta bancaria obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+  /movement/deposit:
+    post:
+      operationId: createMovementDeposit
+      summary: Crear depósito
+      tags:
+        - Movimientos Cuenta Bancaria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movement'
+      responses:
+        '201':
+          description: Depósito creado exitosamente
+        '400':
+          description: Error en Request
+        '404':
+          description: Recurso no encontrado
+
+  /movement/transfer:
+    post:
+      operationId: createTransfer
+      summary: Crear transferencia
+      tags:
+        - Movimientos Cuenta Bancaria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movement'
+      responses:
+        '201':
+          description: Transferencia creada exitosamente
+        '400':
+          description: Error en Request
+        '404':
+          description: Recurso no encontrado
+
+  /movement/withdraw:
+    post:
+      operationId: createWithDraw
+      summary: Crear retiro
+      tags:
+        - Movimientos Cuenta Bancaria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movement'
+      responses:
+        '201':
+          description: Retiro creado exitosamente
+        '400':
+          description: Error en Request
+        '404':
+          description: Recurso no encontrado
+
+  /movement/{account_id}:
+    get:
+      operationId: getMovementsByAccountId
+      summary: Obtener movimientos de cuenta bancaria
+      tags:
+        - Movimientos Cuenta Bancaria
+      parameters:
+        - name: account_id
+          in: path
+          description: ID de la cuenta bancaria
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de movimientos de cuenta bancaria obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movement'
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+  /report/balance_account/{customer_id}:
+    get:
+      operationId: getBalanceAccount
+      summary: Obtener resumen de saldos promedios del mes en curso de los productos bancarios.
+      tags:
+        - Reportes
+      parameters:
+        - name: customer_id
+          in: path
+          description: ID del cliente
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Reporte de saldos promedios.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceAccounts'
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+  /report/fee/{account_id}:
+    get:
+      operationId: getFeeByAccount
+      summary: Obtener las comisiones cobradas por cuenta bancaria.
+      tags:
+        - Reportes
+      parameters:
+        - name: account_id
+          in: path
+          description: ID de la cuenta
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Reporte de saldos promedios.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movement'
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        _id:
+          type: string
+        customer_id:
+          type: string
+        holders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Holders'
+        type_account:
+          type: string
+        current_balance:
+          type: number
+        limit_max_movements:
+          type: integer
+        maintenance_fee:
+          type: number
+        date_movement:
+          type: string
+    Movement:
+      type: object
+      properties:
+        _id:
+          type: string
+        account_id:
+          type: string
+        type_movement:
+          type: string
+        mount:
+          type: number
+        fecha:
+          type: string
+        fee:
+          type: number
+        destination:
+          type: string
+    Holders:
+      type: object
+      properties:
+        dni:
+          type: string
+        fullname:
+          type: string
+    BalanceAccounts:
+      type: object
+      properties:
+        customerId:
+          type: string
+        summary_accounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/SummaryAccountBalance"
+    SummaryAccountBalance:
+      type: object
+      properties:
+        account_id:
+          type: string
+        balanceAvg:
+          type: number
