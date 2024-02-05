@@ -37,4 +37,12 @@ public class Constantes {
   public static final String MOUNT_INSUFICIENT_CREATE_VIP = "Para abrir una cuenta vip se necesita aperturarla con un mínimo de S/ 500.00 soles";
   public static final String REQUIRED_CUENTA_CORRIENTE = "Necesitas tener una cuenta corriente";
   public static final Double FEE_LIMIT_TRANSACTION = 0.05; //5%
+  public static final String URL_CREDIT_HAS_DEBT = "http://localhost:8083/api/v1/movement_credits/has_debt/";
+  public static final String EX_ERROR_CUSTOMER_HAS_DEBT = "Usted no puede abrir una cuenta, porque tiene deuda";
+  public static final String EX_ERROR_NUMBER_CARD_EXISTS = "Ese número de tarjeta ya existe.";
+  public static final String PREFIX_NUMBER_CARD = "4213";
+  public static final int DURATION_EXPIRED_DEBIT_CARD = 5;
+  public static final String EX_ERROR_NOT_MONEY_AND_ACCOUTS_SECUNDARY = "Usted no cuenta con saldo suficiente en su cuenta principal, y no tiene cuentas secundarias.";
+
+  public static final String EX_ERROR_NOT_MONEY_ACCOUNTS_SECUNDARYS = "No tiene saldo suficiente en ninguna de sus cuentas bancarias secundarias.";
 }

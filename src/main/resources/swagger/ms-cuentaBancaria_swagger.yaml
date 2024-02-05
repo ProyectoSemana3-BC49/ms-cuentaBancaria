@@ -269,6 +269,161 @@ paths:
         '404':
           description: Recurso no encontrado
 
+  /report/last_movements_debit_card/{debit_card_id}:
+    get:
+      operationId: getLastMovementDebitCard
+      tags:
+        - Reportes
+      parameters:
+        - name: debit_card_id
+          in: path
+          description: ID de tarjeta débito
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de últimos 10 movimientos de tarjeta de débito obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovementDebitCard'
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+  /debit_card:
+    get:
+      operationId: getAllDebitCard
+      summary: Obtener todas las tarjetas de débito
+      tags:
+        - Tarjeta de débito
+      responses:
+        '200':
+          description: Lista de tarjetas de debito, obtenidas exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DebitCard"
+    post:
+      operationId: createDebitCard
+      summary: Agregar tarjeta de credito
+      tags:
+        - Tarjeta de débito
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DebitCard'
+      responses:
+        '201':
+          description: Tarjeta de débito creada exitosamente
+        '400':
+          description: Error en Request
+    put:
+      operationId: updateDebitCard
+      summary: Actualizar Tarjeta débito
+      tags:
+        - Tarjeta de débito
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DebitCard'
+      responses:
+        '200':
+          description: Tarjeta de débito actualizada exitosamente
+        '400':
+          description: Error en Request
+        '404':
+          description: Recurso no encontrado
+
+  /debit_card/{debit_card_id}:
+    get:
+      operationId: getDebitCardById
+      summary: Obtener detalle de una tarjeta de débito
+      tags:
+        - Tarjeta de débito
+      parameters:
+        - name: debit_card_id
+          in: path
+          description: ID de la tarjeta de débito
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalle de tarjeta de débito obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitCard'
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+    delete:
+      operationId: deleteDebitCard
+      summary: Eliminar Tarjeta de débito
+      tags:
+        - Tarjeta de débito
+      parameters:
+        - name: debit_card_id
+          in: path
+          description: ID de la tarjeta de débito
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Tarjeta de débito eliminada exitosamente
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+  /movement_debit_card/with_draw:
+    post:
+      operationId: createMovementWithDraw
+      summary: Agregar Movimiento retiro
+      tags:
+        - Movimiento Tarjeta débito
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovementDebitCard'
+      responses:
+        '201':
+          description: Movimiento Tarjeta débito creada exitosamente
+        '400':
+          description: Error en Request
+
+  /movement_debit_card/movement/payment:
+    post:
+      operationId: createMovementPayment
+      summary: Agregar Movimiento Pago
+      tags:
+        - Movimiento Tarjeta débito
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovementDebitCard'
+      responses:
+        '201':
+          description: Movimiento Tarjeta débito creada exitosamente
+        '400':
+          description: Error en Request
+
+
+
+
 components:
   schemas:
     Account:
@@ -332,3 +487,44 @@ components:
           type: string
         balanceAvg:
           type: number
+    AccountsSecundary:
+      type: object
+      properties:
+        priority:
+          type: number
+        accountId:
+          type: string
+    DebitCard:
+      type: object
+      properties:
+        customerId:
+          type: string
+        createdCardDebit:
+          type: string
+        numberCard:
+          type: string
+        expiration:
+          type: string
+        cvv2:
+          type: string
+        password:
+          type: string
+        accountIdPrincipal:
+          type: string
+        accountsSecundary:
+          type: array
+          items:
+            $ref: "#/components/schemas/AccountsSecundary"
+    MovementDebitCard:
+      type: object
+      properties:
+        debitCardId:
+          type: string
+        accountDebited:
+          type: string
+        typeMovement:
+          type: string
+        mount:
+          type: number
+        date:
+          type: string

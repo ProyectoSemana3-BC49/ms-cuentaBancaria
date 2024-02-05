@@ -1,9 +1,9 @@
 package com.nttdatabc.mscuentabancaria.service.strategy.strategy_typeaccount;
 
 import com.nttdatabc.mscuentabancaria.model.Account;
-import com.nttdatabc.mscuentabancaria.model.CustomerExt;
+import com.nttdatabc.mscuentabancaria.model.response.CustomerExt;
 import com.nttdatabc.mscuentabancaria.model.enums.TypeCustomer;
-import com.nttdatabc.mscuentabancaria.service.CreditApiExtImpl;
+import com.nttdatabc.mscuentabancaria.service.api.CreditApiExtImpl;
 import com.nttdatabc.mscuentabancaria.utils.exceptions.errors.ErrorResponseException;
 import org.springframework.http.HttpStatus;
 import reactor.core.publisher.Mono;

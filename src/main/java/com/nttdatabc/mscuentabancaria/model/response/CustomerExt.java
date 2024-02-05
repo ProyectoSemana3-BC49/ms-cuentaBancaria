@@ -1,4 +1,4 @@
-package com.nttdatabc.mscuentabancaria.model;
+package com.nttdatabc.mscuentabancaria.model.response;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

@@ -2,6 +2,7 @@ package com.nttdatabc.mscuentabancaria.controller.interfaces;
 
 import com.nttdatabc.mscuentabancaria.model.BalanceAccounts;
 import com.nttdatabc.mscuentabancaria.model.Movement;
+import com.nttdatabc.mscuentabancaria.model.MovementDebitCard;
 import com.nttdatabc.mscuentabancaria.utils.ApiUtil;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -114,6 +115,46 @@ public interface ReportControllerApi {
     for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
       if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
         String exampleString = "[ { \"type_movement\" : \"type_movement\", \"fecha\" : \"fecha\", \"account_id\" : \"account_id\", \"fee\" : 6.027456183070403, \"destination\" : \"destination\", \"_id\" : \"_id\", \"mount\" : 0.8008281904610115 }, { \"type_movement\" : \"type_movement\", \"fecha\" : \"fecha\", \"account_id\" : \"account_id\", \"fee\" : 6.027456183070403, \"destination\" : \"destination\", \"_id\" : \"_id\", \"mount\" : 0.8008281904610115 } ]";
+        result = ApiUtil.getExampleResponse(exchange, mediaType, exampleString);
+        break;
+      }
+    }
+    return ResponseEntity.ok().build();
+
+  }
+  /**
+   * GET /report/last_movements_debit_card/{debit_card_id}
+   *
+   * @param debitCardId ID de tarjeta débito (required)
+   * @return Lista de últimos 10 movimientos de tarjeta de débito obtenida exitosamente (status code 200)
+   *         or Error en request (status code 400)
+   *         or Recurso no encontrado (status code 404)
+   */
+  @Operation(
+      operationId = "getLastMovementDebitCard",
+      tags = { "Reportes" },
+      responses = {
+          @ApiResponse(responseCode = "200", description = "Lista de últimos 10 movimientos de tarjeta de débito obtenida exitosamente", content = {
+              @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MovementDebitCard.class)))
+          }),
+          @ApiResponse(responseCode = "400", description = "Error en request"),
+          @ApiResponse(responseCode = "404", description = "Recurso no encontrado")
+      }
+  )
+  @RequestMapping(
+      method = RequestMethod.GET,
+      value = "/report/last_movements_debit_card/{debit_card_id}",
+      produces = { "application/json" }
+  )
+  default ResponseEntity<Flux<MovementDebitCard>> getLastMovementDebitCard(
+      @Parameter(name = "debit_card_id", description = "ID de tarjeta débito", required = true, in = ParameterIn.PATH) @PathVariable("debit_card_id") String debitCardId,
+      @Parameter(hidden = true) final ServerWebExchange exchange
+  ) {
+    Mono<Void> result = Mono.empty();
+    exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
+    for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
+      if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+        String exampleString = "[ { \"date\" : \"date\", \"debitCardId\" : \"debitCardId\", \"accountDebited\" : \"accountDebited\", \"typeMovement\" : \"typeMovement\", \"mount\" : 0.8008281904610115 }, { \"date\" : \"date\", \"debitCardId\" : \"debitCardId\", \"accountDebited\" : \"accountDebited\", \"typeMovement\" : \"typeMovement\", \"mount\" : 0.8008281904610115 } ]";
         result = ApiUtil.getExampleResponse(exchange, mediaType, exampleString);
         break;
       }

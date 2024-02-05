@@ -1,6 +1,6 @@
 package com.nttdatabc.mscuentabancaria.service.interfaces;
 
-import com.nttdatabc.mscuentabancaria.model.CustomerExt;
+import com.nttdatabc.mscuentabancaria.model.response.CustomerExt;
 import reactor.core.publisher.Mono;
 
 /**

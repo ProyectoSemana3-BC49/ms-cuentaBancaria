@@ -1,6 +1,6 @@
-package com.nttdatabc.mscuentabancaria.service;
+package com.nttdatabc.mscuentabancaria.service.api;
 
-import com.nttdatabc.mscuentabancaria.model.CustomerExt;
+import com.nttdatabc.mscuentabancaria.model.response.CustomerExt;
 import com.nttdatabc.mscuentabancaria.service.interfaces.CustomerApiExt;
 import com.nttdatabc.mscuentabancaria.utils.exceptions.errors.ErrorResponseException;
 import org.springframework.beans.factory.annotation.Autowired;

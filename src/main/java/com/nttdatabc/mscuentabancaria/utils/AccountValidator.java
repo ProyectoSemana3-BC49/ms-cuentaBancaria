@@ -1,19 +1,16 @@
 package com.nttdatabc.mscuentabancaria.utils;
 
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.EX_ERROR_REQUEST;
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.EX_ERROR_TYPE_ACCOUNT;
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.EX_ERROR_VALUE_MIN;
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.EX_NOT_FOUND_RECURSO;
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.EX_VALUE_EMPTY;
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.VALUE_MIN_ACCOUNT_BANK;
-
 import com.nttdatabc.mscuentabancaria.model.Account;
-import com.nttdatabc.mscuentabancaria.model.CustomerExt;
+import com.nttdatabc.mscuentabancaria.model.response.CustomerExt;
+import com.nttdatabc.mscuentabancaria.model.HasDebtResponse;
 import com.nttdatabc.mscuentabancaria.model.enums.TypeAccountBank;
-import com.nttdatabc.mscuentabancaria.service.CustomerApiExtImpl;
+import com.nttdatabc.mscuentabancaria.service.api.CreditApiExtImpl;
+import com.nttdatabc.mscuentabancaria.service.api.CustomerApiExtImpl;
 import com.nttdatabc.mscuentabancaria.utils.exceptions.errors.ErrorResponseException;
 import org.springframework.http.HttpStatus;
 import reactor.core.publisher.Mono;
+
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
 
 /**
  * Class.
@@ -103,5 +100,18 @@ public class AccountValidator {
             HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND));
       }
     });
+  }
+
+  public static Mono<Void> verifyCustomerDebCredit(String customerId, CreditApiExtImpl creditApiExt) {
+    return Mono.defer(() -> {
+      Mono<HasDebtResponse> hasDebtResponseMono = creditApiExt.hasDebtCustomer(customerId);
+      return hasDebtResponseMono.flatMap(hasDebtResponse -> {
+        if (hasDebtResponse.getHasExistsDebt()) {
+          return Mono.error(new ErrorResponseException(EX_ERROR_CUSTOMER_HAS_DEBT, HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT));
+        } else {
+          return Mono.empty();
+        }
+      });
+    }).then();
   }
 }

@@ -1,6 +1,7 @@
-package com.nttdatabc.mscuentabancaria.service;
+package com.nttdatabc.mscuentabancaria.service.api;
 
-import com.nttdatabc.mscuentabancaria.model.CreditResponseExt;
+import com.nttdatabc.mscuentabancaria.model.response.CreditResponseExt;
+import com.nttdatabc.mscuentabancaria.model.HasDebtResponse;
 import com.nttdatabc.mscuentabancaria.model.enums.TypeCredit;
 import com.nttdatabc.mscuentabancaria.service.interfaces.CreditApiExt;
 import com.nttdatabc.mscuentabancaria.utils.exceptions.errors.ErrorResponseException;
@@ -45,5 +46,15 @@ public class CreditApiExtImpl implements CreditApiExt {
         })
         .then();
 
+  }
+
+  @Override
+  public Mono<HasDebtResponse> hasDebtCustomer(String customerId) {
+    String apiUrl = URL_CREDIT_HAS_DEBT + customerId;
+    return webClient.get()
+        .uri(apiUrl)
+        .retrieve()
+        .onStatus(HttpStatus::isError, response -> Mono.error(new ErrorResponseException(EX_NOT_FOUND_RECURSO, response.statusCode().value(), response.statusCode())))
+        .bodyToMono(HasDebtResponse.class);
   }
 }

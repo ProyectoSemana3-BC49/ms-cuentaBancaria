@@ -3,6 +3,7 @@ package com.nttdatabc.mscuentabancaria.controller;
 import com.nttdatabc.mscuentabancaria.controller.interfaces.ReportControllerApi;
 import com.nttdatabc.mscuentabancaria.model.BalanceAccounts;
 import com.nttdatabc.mscuentabancaria.model.Movement;
+import com.nttdatabc.mscuentabancaria.model.MovementDebitCard;
 import com.nttdatabc.mscuentabancaria.service.ReportServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,10 @@ public class ReportController implements ReportControllerApi {
         .doOnError(throwable -> log.error("getFeeByAccount:: error " + throwable.getMessage()))
         .doOnComplete(() -> log.info("getFeeByAccount:: finalizado con exito"))
         , HttpStatus.OK);
+  }
+
+  @Override
+  public ResponseEntity<Flux<MovementDebitCard>> getLastMovementDebitCard(String debitCardId, ServerWebExchange exchange) {
+    return ReportControllerApi.super.getLastMovementDebitCard(debitCardId, exchange);
   }
 }

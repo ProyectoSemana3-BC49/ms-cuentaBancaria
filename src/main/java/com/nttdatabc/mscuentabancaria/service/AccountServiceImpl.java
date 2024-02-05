@@ -4,6 +4,8 @@ import com.nttdatabc.mscuentabancaria.model.Account;
 import com.nttdatabc.mscuentabancaria.model.enums.TypeAccountBank;
 import com.nttdatabc.mscuentabancaria.model.enums.TypeCustomer;
 import com.nttdatabc.mscuentabancaria.repository.AccountRepository;
+import com.nttdatabc.mscuentabancaria.service.api.CreditApiExtImpl;
+import com.nttdatabc.mscuentabancaria.service.api.CustomerApiExtImpl;
 import com.nttdatabc.mscuentabancaria.service.interfaces.AccountService;
 import com.nttdatabc.mscuentabancaria.service.strategy.strategy_account.AccountValidationStrategy;
 import com.nttdatabc.mscuentabancaria.service.strategy.strategy_account.EmpresaAccountValidationStrategy;
@@ -44,6 +46,7 @@ public class AccountServiceImpl implements AccountService {
         .then(validateAccountEmpty(account))
         .then(verifyTypeAccount(account))
         .then(verifyValues(account))
+        .then(verifyCustomerDebCredit(account.getCustomerId(),creditApiExt))
         .then(Mono.just(account))
         .flatMap(accountMono -> verifyCustomerExists(accountMono.getCustomerId(),customerApiExtImpl)
             .flatMap(customerFound -> getAccountsByCustomerIdService(customerFound.get_id()).collectList()

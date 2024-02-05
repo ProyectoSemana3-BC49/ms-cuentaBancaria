@@ -5,6 +5,7 @@ import com.nttdatabc.mscuentabancaria.model.Movement;
 import com.nttdatabc.mscuentabancaria.model.SummaryAccountBalance;
 import com.nttdatabc.mscuentabancaria.repository.AccountRepository;
 import com.nttdatabc.mscuentabancaria.repository.MovementRepository;
+import com.nttdatabc.mscuentabancaria.service.api.CustomerApiExtImpl;
 import com.nttdatabc.mscuentabancaria.service.interfaces.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
