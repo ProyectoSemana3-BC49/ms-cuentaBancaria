@@ -1,31 +1,31 @@
 package com.nttdatabc.mscuentabancaria.service;
 
-import com.nttdatabc.mscuentabancaria.model.Account;
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.EX_NOT_FOUND_RECURSO;
+import static com.nttdatabc.mscuentabancaria.utils.DebitCardValidator.*;
+import static com.nttdatabc.mscuentabancaria.utils.Utilitarios.*;
+
 import com.nttdatabc.mscuentabancaria.model.AccountsSecundary;
 import com.nttdatabc.mscuentabancaria.model.DebitCard;
 import com.nttdatabc.mscuentabancaria.repository.DebitCardRepository;
 import com.nttdatabc.mscuentabancaria.service.api.CreditApiExtImpl;
 import com.nttdatabc.mscuentabancaria.service.api.CustomerApiExtImpl;
 import com.nttdatabc.mscuentabancaria.service.interfaces.DebitCardService;
-import com.nttdatabc.mscuentabancaria.utils.Utilitarios;
 import com.nttdatabc.mscuentabancaria.utils.exceptions.errors.ErrorResponseException;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.EX_NOT_FOUND_RECURSO;
-import static com.nttdatabc.mscuentabancaria.utils.DebitCardValidator.*;
-import static com.nttdatabc.mscuentabancaria.utils.Utilitarios.*;
 
+/**
+ * Debit card service.
+ */
 @Service
 @Slf4j
 public class DebitCardServiceImpl implements DebitCardService {
@@ -53,16 +53,16 @@ public class DebitCardServiceImpl implements DebitCardService {
         .then(accountService.getAccountByIdService(debitCard.getAccountIdPrincipal()))
         .then(Mono.just(debitCard))
         .flatMap(debitCardFlujo -> {
-            if(debitCardFlujo.getAccountsSecundary() != null){
-              return Flux.fromIterable(debitCardFlujo.getAccountsSecundary())
-                  .flatMap(accountsSecundary -> accountService.getAccountByIdService(accountsSecundary.getAccountId())
-                      .hasElement()
-                      .defaultIfEmpty(false))
-                  .any(Boolean::booleanValue)
-                  .defaultIfEmpty(false);
-            }else{
-              return Mono.empty();
-            }
+          if (debitCardFlujo.getAccountsSecundary() != null) {
+            return Flux.fromIterable(debitCardFlujo.getAccountsSecundary())
+                .flatMap(accountsSecundary -> accountService.getAccountByIdService(accountsSecundary.getAccountId())
+                    .hasElement()
+                    .defaultIfEmpty(false))
+                .any(Boolean::booleanValue)
+                .defaultIfEmpty(false);
+          } else {
+            return Mono.empty();
+          }
 
         }).then(Mono.just(debitCard))
         .map(debitCardTransform -> {
@@ -72,7 +72,7 @@ public class DebitCardServiceImpl implements DebitCardService {
           debitCardTransform.setCreatedCardDebit(dateTimeNow.toString());
           debitCardTransform.setExpiration(calculateExpirationDate());
           debitCardTransform.set_id(generateUuid());
-          if(debitCardTransform.getAccountsSecundary() == null){
+          if (debitCardTransform.getAccountsSecundary() == null) {
             debitCardTransform.setAccountsSecundary(new ArrayList<>());
           }
           return debitCardTransform;
@@ -90,7 +90,7 @@ public class DebitCardServiceImpl implements DebitCardService {
   @Override
   public Mono<DebitCard> getDebitCardByIdService(String debitCardId) {
     return debitCardRepository.findById(debitCardId)
-        .switchIfEmpty(Mono.error(new ErrorResponseException(EX_NOT_FOUND_RECURSO, HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND)));
+        .switchIfEmpty(Mono.error(new ErrorResponseException(EX_NOT_FOUND_RECURSO, HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND)));
   }
 
   @Override

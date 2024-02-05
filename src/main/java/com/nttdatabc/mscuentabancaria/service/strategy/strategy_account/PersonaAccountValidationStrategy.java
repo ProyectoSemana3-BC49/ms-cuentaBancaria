@@ -1,13 +1,13 @@
 package com.nttdatabc.mscuentabancaria.service.strategy.strategy_account;
 
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
+
 import com.nttdatabc.mscuentabancaria.model.Account;
 import com.nttdatabc.mscuentabancaria.utils.exceptions.errors.ErrorResponseException;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
 
 /**
  * Persona account validation.

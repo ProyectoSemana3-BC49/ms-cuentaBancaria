@@ -1,16 +1,17 @@
 package com.nttdatabc.mscuentabancaria.utils;
 
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
+
 import com.nttdatabc.mscuentabancaria.model.Account;
-import com.nttdatabc.mscuentabancaria.model.response.CustomerExt;
 import com.nttdatabc.mscuentabancaria.model.HasDebtResponse;
 import com.nttdatabc.mscuentabancaria.model.enums.TypeAccountBank;
+import com.nttdatabc.mscuentabancaria.model.response.CustomerExt;
 import com.nttdatabc.mscuentabancaria.service.api.CreditApiExtImpl;
 import com.nttdatabc.mscuentabancaria.service.api.CustomerApiExtImpl;
 import com.nttdatabc.mscuentabancaria.utils.exceptions.errors.ErrorResponseException;
 import org.springframework.http.HttpStatus;
 import reactor.core.publisher.Mono;
 
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
 
 /**
  * Class.

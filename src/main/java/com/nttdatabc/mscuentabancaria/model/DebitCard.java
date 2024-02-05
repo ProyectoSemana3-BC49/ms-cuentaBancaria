@@ -1,25 +1,18 @@
 package com.nttdatabc.mscuentabancaria.model;
 
-import java.net.URI;
-import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.nttdatabc.mscuentabancaria.model.AccountsSecundary;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
+import java.util.Objects;
+import javax.annotation.Generated;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-import java.util.*;
-import javax.annotation.Generated;
-
 /**
- * DebitCard
+ * DebitCard.
  */
 
 @Document(value = "debitCard")
@@ -59,6 +52,7 @@ public class DebitCard {
 
   /**
    * Get customerId
+   *
    * @return customerId
    */
 
@@ -79,6 +73,7 @@ public class DebitCard {
 
   /**
    * Get createdCardDebit
+   *
    * @return createdCardDebit
    */
 
@@ -99,6 +94,7 @@ public class DebitCard {
 
   /**
    * Get numberCard
+   *
    * @return numberCard
    */
 
@@ -119,6 +115,7 @@ public class DebitCard {
 
   /**
    * Get expiration
+   *
    * @return expiration
    */
 
@@ -139,6 +136,7 @@ public class DebitCard {
 
   /**
    * Get cvv2
+   *
    * @return cvv2
    */
 
@@ -159,6 +157,7 @@ public class DebitCard {
 
   /**
    * Get password
+   *
    * @return password
    */
 
@@ -179,6 +178,7 @@ public class DebitCard {
 
   /**
    * Get accountIdPrincipal
+   *
    * @return accountIdPrincipal
    */
 
@@ -207,6 +207,7 @@ public class DebitCard {
 
   /**
    * Get accountsSecundary
+   *
    * @return accountsSecundary
    */
   @Valid

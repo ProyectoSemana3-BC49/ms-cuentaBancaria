@@ -1,10 +1,14 @@
 package com.nttdatabc.mscuentabancaria.service.api;
 
-import com.nttdatabc.mscuentabancaria.model.response.CreditResponseExt;
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
+
+import com.nttdatabc.mscuentabancaria.model.CreditExt;
 import com.nttdatabc.mscuentabancaria.model.HasDebtResponse;
 import com.nttdatabc.mscuentabancaria.model.enums.TypeCredit;
+import com.nttdatabc.mscuentabancaria.model.response.CreditResponseExt;
 import com.nttdatabc.mscuentabancaria.service.interfaces.CreditApiExt;
 import com.nttdatabc.mscuentabancaria.utils.exceptions.errors.ErrorResponseException;
+import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,9 +17,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.function.Function;
 
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
+
 
 @Service
 @Slf4j
@@ -56,5 +59,15 @@ public class CreditApiExtImpl implements CreditApiExt {
         .retrieve()
         .onStatus(HttpStatus::isError, response -> Mono.error(new ErrorResponseException(EX_NOT_FOUND_RECURSO, response.statusCode().value(), response.statusCode())))
         .bodyToMono(HasDebtResponse.class);
+  }
+
+  @Override
+  public Flux<CreditExt> getCreditsByCustomerId(String customerId) {
+    String apiUrl = URL_CREDIT_CUSTOMER + customerId;
+    return webClient.get()
+        .uri(apiUrl)
+        .retrieve()
+        .onStatus(HttpStatus::isError, response -> Mono.error(new ErrorResponseException(EX_NOT_FOUND_RECURSO, response.statusCode().value(), response.statusCode())))
+        .bodyToFlux(CreditExt.class);
   }
 }

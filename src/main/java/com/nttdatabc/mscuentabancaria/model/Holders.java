@@ -1,21 +1,14 @@
 package com.nttdatabc.mscuentabancaria.model;
 
-import java.net.URI;
-import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
+import java.util.Objects;
 import javax.annotation.Generated;
 
+
 /**
- * Holders
+ * Holders.
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-02-02T16:30:53.069843400-05:00[America/Lima]")
@@ -32,6 +25,7 @@ public class Holders {
 
   /**
    * Get dni
+   *
    * @return dni
    */
 
@@ -52,6 +46,7 @@ public class Holders {
 
   /**
    * Get fullname
+   *
    * @return fullname
    */
 

@@ -1,15 +1,15 @@
 package com.nttdatabc.mscuentabancaria.utils;
 
-import com.nttdatabc.mscuentabancaria.model.DebitCard;
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
+
 import com.nttdatabc.mscuentabancaria.model.MovementDebitCard;
-import com.nttdatabc.mscuentabancaria.service.DebitCardServiceImpl;
-import com.nttdatabc.mscuentabancaria.service.interfaces.MovementDebitCardService;
 import com.nttdatabc.mscuentabancaria.utils.exceptions.errors.ErrorResponseException;
 import org.springframework.http.HttpStatus;
 import reactor.core.publisher.Mono;
 
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
-
+/**
+ * Movement DebitCard Validator.
+ */
 public class MovementDebitCardValidator {
   public static Mono<Void> validateMovementDebitCardNoNulls(MovementDebitCard movementDebitCard) {
     return Mono.just(movementDebitCard)

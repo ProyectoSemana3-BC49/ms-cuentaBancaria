@@ -1,5 +1,7 @@
 package com.nttdatabc.mscuentabancaria.controller;
 
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.PREFIX_PATH;
+
 import com.nttdatabc.mscuentabancaria.controller.interfaces.MovementControllerApi;
 import com.nttdatabc.mscuentabancaria.model.Movement;
 import com.nttdatabc.mscuentabancaria.service.MovementServiceImpl;
@@ -13,7 +15,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.PREFIX_PATH;
+
 
 /**
  * Clase contoller Movement.

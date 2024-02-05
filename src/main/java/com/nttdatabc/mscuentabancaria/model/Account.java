@@ -1,26 +1,19 @@
 package com.nttdatabc.mscuentabancaria.model;
 
-import java.net.URI;
-import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.nttdatabc.mscuentabancaria.model.Holders;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
+import java.util.Objects;
+import javax.annotation.Generated;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-import java.util.*;
-import javax.annotation.Generated;
-
 /**
- * Account
+ * Account.
  */
 
 @Document(value = "account")
@@ -50,8 +43,9 @@ public class Account {
   }
 
   /**
-   * Get id
-   * @return id
+   * Get id.
+   *
+   * @return id.
    */
 
   @Schema(name = "_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
@@ -71,6 +65,7 @@ public class Account {
 
   /**
    * Get customerId
+   *
    * @return customerId
    */
 
@@ -99,6 +94,7 @@ public class Account {
 
   /**
    * Get holders
+   *
    * @return holders
    */
   @Valid
@@ -119,6 +115,7 @@ public class Account {
 
   /**
    * Get typeAccount
+   *
    * @return typeAccount
    */
 
@@ -139,6 +136,7 @@ public class Account {
 
   /**
    * Get currentBalance
+   *
    * @return currentBalance
    */
   @Valid
@@ -159,6 +157,7 @@ public class Account {
 
   /**
    * Get limitMaxMovements
+   *
    * @return limitMaxMovements
    */
 
@@ -179,6 +178,7 @@ public class Account {
 
   /**
    * Get maintenanceFee
+   *
    * @return maintenanceFee
    */
   @Valid
@@ -199,6 +199,7 @@ public class Account {
 
   /**
    * Get dateMovement
+   *
    * @return dateMovement
    */
 

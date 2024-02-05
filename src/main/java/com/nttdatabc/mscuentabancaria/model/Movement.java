@@ -1,23 +1,16 @@
 package com.nttdatabc.mscuentabancaria.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.math.BigDecimal;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.math.BigDecimal;
+import java.util.Objects;
+import javax.annotation.Generated;
+import javax.validation.Valid;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-import java.util.*;
-import javax.annotation.Generated;
-
 /**
- * Movement
+ * Movement.
  */
 @Document(value = "movement")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-02-02T16:30:53.069843400-05:00[America/Lima]")

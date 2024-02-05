@@ -4,12 +4,14 @@ import com.nttdatabc.mscuentabancaria.model.DebitCard;
 import com.nttdatabc.mscuentabancaria.utils.ApiUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import javax.annotation.Generated;
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +21,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.validation.Valid;
-import javax.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-02-04T12:54:31.461025300-05:00[America/Lima]")
 @Validated
@@ -30,14 +30,14 @@ public interface DebitCardControllerApi {
   /**
    * POST /debit_card : Agregar tarjeta de credito
    *
-   * @param debitCard  (optional)
+   * @param debitCard (optional)
    * @return Tarjeta de débito creada exitosamente (status code 201)
-   *         or Error en Request (status code 400)
+   * or Error en Request (status code 400)
    */
   @Operation(
       operationId = "createDebitCard",
       summary = "Agregar tarjeta de credito",
-      tags = { "Tarjeta de débito" },
+      tags = {"Tarjeta de débito"},
       responses = {
           @ApiResponse(responseCode = "201", description = "Tarjeta de débito creada exitosamente"),
           @ApiResponse(responseCode = "400", description = "Error en Request")
@@ -46,7 +46,7 @@ public interface DebitCardControllerApi {
   @RequestMapping(
       method = RequestMethod.POST,
       value = "/debit_card",
-      consumes = { "application/json" }
+      consumes = {"application/json"}
   )
   default ResponseEntity<Mono<Void>> createDebitCard(
       @Parameter(name = "DebitCard", description = "") @Valid @RequestBody(required = false) DebitCard debitCard,
@@ -64,13 +64,13 @@ public interface DebitCardControllerApi {
    *
    * @param debitCardId ID de la tarjeta de débito (required)
    * @return Tarjeta de débito eliminada exitosamente (status code 200)
-   *         or Error en request (status code 400)
-   *         or Recurso no encontrado (status code 404)
+   * or Error en request (status code 400)
+   * or Recurso no encontrado (status code 404)
    */
   @Operation(
       operationId = "deleteDebitCard",
       summary = "Eliminar Tarjeta de débito",
-      tags = { "Tarjeta de débito" },
+      tags = {"Tarjeta de débito"},
       responses = {
           @ApiResponse(responseCode = "200", description = "Tarjeta de débito eliminada exitosamente"),
           @ApiResponse(responseCode = "400", description = "Error en request"),
@@ -100,7 +100,7 @@ public interface DebitCardControllerApi {
   @Operation(
       operationId = "getAllDebitCard",
       summary = "Obtener todas las tarjetas de débito",
-      tags = { "Tarjeta de débito" },
+      tags = {"Tarjeta de débito"},
       responses = {
           @ApiResponse(responseCode = "200", description = "Lista de tarjetas de debito, obtenidas exitosamente", content = {
               @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = DebitCard.class)))
@@ -110,7 +110,7 @@ public interface DebitCardControllerApi {
   @RequestMapping(
       method = RequestMethod.GET,
       value = "/debit_card",
-      produces = { "application/json" }
+      produces = {"application/json"}
   )
   default ResponseEntity<Flux<DebitCard>> getAllDebitCard(
       @Parameter(hidden = true) final ServerWebExchange exchange
@@ -134,13 +134,13 @@ public interface DebitCardControllerApi {
    *
    * @param debitCardId ID de la tarjeta de débito (required)
    * @return Detalle de tarjeta de débito obtenido exitosamente (status code 200)
-   *         or Error en request (status code 400)
-   *         or Recurso no encontrado (status code 404)
+   * or Error en request (status code 400)
+   * or Recurso no encontrado (status code 404)
    */
   @Operation(
       operationId = "getDebitCardById",
       summary = "Obtener detalle de una tarjeta de débito",
-      tags = { "Tarjeta de débito" },
+      tags = {"Tarjeta de débito"},
       responses = {
           @ApiResponse(responseCode = "200", description = "Detalle de tarjeta de débito obtenido exitosamente", content = {
               @Content(mediaType = "application/json", schema = @Schema(implementation = DebitCard.class))
@@ -152,7 +152,7 @@ public interface DebitCardControllerApi {
   @RequestMapping(
       method = RequestMethod.GET,
       value = "/debit_card/{debit_card_id}",
-      produces = { "application/json" }
+      produces = {"application/json"}
   )
   default ResponseEntity<Mono<DebitCard>> getDebitCardById(
       @Parameter(name = "debit_card_id", description = "ID de la tarjeta de débito", required = true, in = ParameterIn.PATH) @PathVariable("debit_card_id") String debitCardId,
@@ -175,15 +175,15 @@ public interface DebitCardControllerApi {
   /**
    * PUT /debit_card : Actualizar Tarjeta débito
    *
-   * @param debitCard  (optional)
+   * @param debitCard (optional)
    * @return Tarjeta de débito actualizada exitosamente (status code 200)
-   *         or Error en Request (status code 400)
-   *         or Recurso no encontrado (status code 404)
+   * or Error en Request (status code 400)
+   * or Recurso no encontrado (status code 404)
    */
   @Operation(
       operationId = "updateDebitCard",
       summary = "Actualizar Tarjeta débito",
-      tags = { "Tarjeta de débito" },
+      tags = {"Tarjeta de débito"},
       responses = {
           @ApiResponse(responseCode = "200", description = "Tarjeta de débito actualizada exitosamente"),
           @ApiResponse(responseCode = "400", description = "Error en Request"),
@@ -193,7 +193,7 @@ public interface DebitCardControllerApi {
   @RequestMapping(
       method = RequestMethod.PUT,
       value = "/debit_card",
-      consumes = { "application/json" }
+      consumes = {"application/json"}
   )
   default ResponseEntity<Mono<Void>> updateDebitCard(
       @Parameter(name = "DebitCard", description = "") @Valid @RequestBody(required = false) DebitCard debitCard,

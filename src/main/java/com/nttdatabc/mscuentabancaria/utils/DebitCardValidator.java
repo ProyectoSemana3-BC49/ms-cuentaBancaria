@@ -1,6 +1,7 @@
 package com.nttdatabc.mscuentabancaria.utils;
 
-import com.nttdatabc.mscuentabancaria.model.Account;
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
+
 import com.nttdatabc.mscuentabancaria.model.DebitCard;
 import com.nttdatabc.mscuentabancaria.model.HasDebtResponse;
 import com.nttdatabc.mscuentabancaria.model.response.CustomerExt;
@@ -11,10 +12,9 @@ import com.nttdatabc.mscuentabancaria.utils.exceptions.errors.ErrorResponseExcep
 import org.springframework.http.HttpStatus;
 import reactor.core.publisher.Mono;
 
-import java.util.Objects;
-
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
-
+/**
+ * Clase debitCardValidator.
+ */
 public class DebitCardValidator {
   public static Mono<Void> validateDebitCardNoNulls(DebitCard debitCard) {
     return Mono.just(debitCard)
@@ -24,6 +24,7 @@ public class DebitCardValidator {
             HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST)))
         .then();
   }
+
   public static Mono<Void> validateDebitCardUpdateNoNulls(DebitCard debitCard) {
     return Mono.just(debitCard)
         .filter(c -> c.get_id() != null)
@@ -32,6 +33,7 @@ public class DebitCardValidator {
             HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST)))
         .then();
   }
+
   public static Mono<Void> validateDebitCardEmpty(DebitCard debitCard) {
     return Mono.just(debitCard)
         .filter(c -> !c.getCustomerId().isEmpty())
@@ -40,6 +42,7 @@ public class DebitCardValidator {
             HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST)))
         .then();
   }
+
   public static Mono<Void> validateDebitCardUpdateEmpty(DebitCard debitCard) {
     return Mono.just(debitCard)
         .filter(c -> !c.get_id().isEmpty())
@@ -48,6 +51,7 @@ public class DebitCardValidator {
             HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST)))
         .then();
   }
+
   public static Mono<CustomerExt> verifyCustomerExists(String customerId, CustomerApiExtImpl customerApiExtImpl) {
     return Mono.defer(() -> {
       try {
@@ -58,6 +62,7 @@ public class DebitCardValidator {
       }
     });
   }
+
   public static Mono<Void> verifyCustomerDebCredit(String customerId, CreditApiExtImpl creditApiExt) {
     return Mono.defer(() -> {
       Mono<HasDebtResponse> hasDebtResponseMono = creditApiExt.hasDebtCustomer(customerId);
@@ -71,14 +76,14 @@ public class DebitCardValidator {
     }).then();
   }
 
-  public static Mono<Void>verifyDuplicateNumberDebitCard(String debitCardId, DebitCardRepository debitCardRepository){
+  public static Mono<Void> verifyDuplicateNumberDebitCard(String debitCardId, DebitCardRepository debitCardRepository) {
     return Mono.defer(() -> {
-      Mono<DebitCard>findDebitCard = debitCardRepository.findByNumberCard(debitCardId);
+      Mono<DebitCard> findDebitCard = debitCardRepository.findByNumberCard(debitCardId);
       return findDebitCard.hasElement()
           .flatMap(aBoolean -> {
-            if(aBoolean){
+            if (aBoolean) {
               return Mono.error(new ErrorResponseException(EX_ERROR_NUMBER_CARD_EXISTS, HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT));
-            }else{
+            } else {
               return Mono.empty();
             }
           });

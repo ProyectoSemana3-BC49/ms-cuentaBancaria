@@ -1,25 +1,25 @@
 package com.nttdatabc.mscuentabancaria.service;
 
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.FEE_LIMIT_TRANSACTION;
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.TRANSACTION_FEE_FREE;
+import static com.nttdatabc.mscuentabancaria.utils.MovementValidator.*;
+
 import com.nttdatabc.mscuentabancaria.model.Account;
 import com.nttdatabc.mscuentabancaria.model.Movement;
 import com.nttdatabc.mscuentabancaria.model.enums.TypeMovement;
 import com.nttdatabc.mscuentabancaria.repository.MovementRepository;
 import com.nttdatabc.mscuentabancaria.service.interfaces.MovementService;
 import com.nttdatabc.mscuentabancaria.utils.Utilitarios;
-import com.nttdatabc.mscuentabancaria.utils.exceptions.errors.ErrorResponseException;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
 
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.FEE_LIMIT_TRANSACTION;
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.TRANSACTION_FEE_FREE;
-import static com.nttdatabc.mscuentabancaria.utils.MovementValidator.*;
+
 
 @Service
 public class MovementServiceImpl implements MovementService {

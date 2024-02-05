@@ -1,23 +1,26 @@
 package com.nttdatabc.mscuentabancaria.service;
 
-import com.nttdatabc.mscuentabancaria.model.BalanceAccounts;
-import com.nttdatabc.mscuentabancaria.model.Movement;
-import com.nttdatabc.mscuentabancaria.model.SummaryAccountBalance;
+import static com.nttdatabc.mscuentabancaria.utils.AccountValidator.verifyCustomerExists;
+import static com.nttdatabc.mscuentabancaria.utils.MovementValidator.validateAccountRegister;
+
+import com.nttdatabc.mscuentabancaria.model.*;
 import com.nttdatabc.mscuentabancaria.repository.AccountRepository;
+import com.nttdatabc.mscuentabancaria.repository.MovementDebitCardRepository;
 import com.nttdatabc.mscuentabancaria.repository.MovementRepository;
+import com.nttdatabc.mscuentabancaria.service.api.CreditApiExtImpl;
 import com.nttdatabc.mscuentabancaria.service.api.CustomerApiExtImpl;
 import com.nttdatabc.mscuentabancaria.service.interfaces.ReportService;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
-import static com.nttdatabc.mscuentabancaria.utils.AccountValidator.verifyCustomerExists;
-import static com.nttdatabc.mscuentabancaria.utils.MovementValidator.validateAccountRegister;
-
+/**
+ * ReportService impl.
+ */
 @Service
 public class ReportServiceImpl implements ReportService {
   @Autowired
@@ -28,6 +31,13 @@ public class ReportServiceImpl implements ReportService {
   private CustomerApiExtImpl customerApiExtImpl;
   @Autowired
   private AccountServiceImpl accountServiceImpl;
+  @Autowired
+  private MovementDebitCardRepository movementDebitCardRepository;
+  @Autowired
+  private DebitCardServiceImpl debitCardService;
+  @Autowired
+  private CreditApiExtImpl creditApiExt;
+
   @Override
   public Mono<BalanceAccounts> getBalanceAverageService(String customerId) {
     return verifyCustomerExists(customerId, customerApiExtImpl)
@@ -60,7 +70,7 @@ public class ReportServiceImpl implements ReportService {
               .thenReturn(balanceAccounts);
         });
 
-}
+  }
 
   @Override
   public Flux<Movement> getMovementsWithFee(String accountId) {
@@ -74,5 +84,37 @@ public class ReportServiceImpl implements ReportService {
         .filter(movement -> movement.getFecha().contains(dateFilter));
 
 
+  }
+
+  @Override
+  public Flux<MovementDebitCard> getMovementsDebitCardLastTen(String debitCardId) {
+    return debitCardService.getDebitCardByIdService(debitCardId)
+        .thenMany(movementDebitCardRepository.findTop10ByOrderByDateDesc(debitCardId));
+
+  }
+
+  @Override
+  public Mono<Account> getAccountMainDebitCardService(String debitCardId) {
+    return debitCardService.getDebitCardByIdService(debitCardId)
+        .flatMap(debitCard -> accountServiceImpl.getAccountByIdService(debitCard.getAccountIdPrincipal()));
+  }
+
+  @Override
+  public Mono<SummaryProductsBank> getSummaryProductsBankService(String customerId) {
+
+    return customerApiExtImpl.getCustomerById(customerId)
+        .flatMap(customerExt -> {
+          Flux<Account> accountFlux = accountRepository.findByCustomerId(customerExt.get_id());
+          Flux<CreditExt> creditExtFlux = creditApiExt.getCreditsByCustomerId(customerExt.get_id());
+
+          return Mono.zip(accountFlux.collectList(), creditExtFlux.collectList())
+              .map(tuple -> {
+                SummaryProductsBank summaryProductsBank = new SummaryProductsBank();
+                summaryProductsBank.setCustormerId(customerExt.get_id());
+                summaryProductsBank.setAccountsBanks(tuple.getT1());
+                summaryProductsBank.setCreditsBanks(tuple.getT2());
+                return summaryProductsBank;
+              });
+        });
   }
 }

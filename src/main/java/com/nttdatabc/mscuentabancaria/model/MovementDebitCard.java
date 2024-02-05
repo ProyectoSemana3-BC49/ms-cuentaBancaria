@@ -1,20 +1,12 @@
 package com.nttdatabc.mscuentabancaria.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.math.BigDecimal;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-
-import java.util.*;
+import java.math.BigDecimal;
+import java.util.Objects;
 import javax.annotation.Generated;
+import javax.validation.Valid;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * MovementDebitCard
@@ -41,6 +33,7 @@ public class MovementDebitCard {
 
   /**
    * Get debitCardId
+   *
    * @return debitCardId
    */
 
@@ -61,6 +54,7 @@ public class MovementDebitCard {
 
   /**
    * Get accountDebited
+   *
    * @return accountDebited
    */
 
@@ -81,6 +75,7 @@ public class MovementDebitCard {
 
   /**
    * Get typeMovement
+   *
    * @return typeMovement
    */
 
@@ -101,6 +96,7 @@ public class MovementDebitCard {
 
   /**
    * Get mount
+   *
    * @return mount
    */
   @Valid
@@ -121,6 +117,7 @@ public class MovementDebitCard {
 
   /**
    * Get date
+   *
    * @return date
    */
 

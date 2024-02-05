@@ -1,5 +1,9 @@
 package com.nttdatabc.mscuentabancaria.service;
 
+import static com.nttdatabc.mscuentabancaria.utils.AccountValidator.*;
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.EX_ERROR_REQUEST;
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.EX_NOT_FOUND_RECURSO;
+
 import com.nttdatabc.mscuentabancaria.model.Account;
 import com.nttdatabc.mscuentabancaria.model.enums.TypeAccountBank;
 import com.nttdatabc.mscuentabancaria.model.enums.TypeCustomer;
@@ -20,10 +24,10 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static com.nttdatabc.mscuentabancaria.utils.AccountValidator.*;
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.EX_ERROR_REQUEST;
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.EX_NOT_FOUND_RECURSO;
 
+/**
+ * Account service implement.
+ */
 @Service
 @Slf4j
 public class AccountServiceImpl implements AccountService {
@@ -41,22 +45,22 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public Mono<Void> createAccountService(Account account)  {
+  public Mono<Void> createAccountService(Account account) {
     return validateAccountsNoNulls(account)
         .then(validateAccountEmpty(account))
         .then(verifyTypeAccount(account))
         .then(verifyValues(account))
-        .then(verifyCustomerDebCredit(account.getCustomerId(),creditApiExt))
+        .then(verifyCustomerDebCredit(account.getCustomerId(), creditApiExt))
         .then(Mono.just(account))
-        .flatMap(accountMono -> verifyCustomerExists(accountMono.getCustomerId(),customerApiExtImpl)
+        .flatMap(accountMono -> verifyCustomerExists(accountMono.getCustomerId(), customerApiExtImpl)
             .flatMap(customerFound -> getAccountsByCustomerIdService(customerFound.get_id()).collectList()
-                .flatMap(listAccountByCustomer  -> {
+                .flatMap(listAccountByCustomer -> {
                   AccountValidationStrategy accountValidationStrategy = null;
                   if (customerFound.getType().equalsIgnoreCase(TypeCustomer.PERSONA.toString())) {
                     accountValidationStrategy = new PersonaAccountValidationStrategy();
                     return accountValidationStrategy.validateAccount(account, listAccountByCustomer)
                         .thenReturn(customerFound);
-                  }else{
+                  } else {
                     accountValidationStrategy = new EmpresaAccountValidationStrategy();
                     return accountValidationStrategy.validateAccount(account, listAccountByCustomer)
                         .thenReturn(customerFound);
@@ -83,7 +87,7 @@ public class AccountServiceImpl implements AccountService {
                 .then(configationStrategy.configureAccount(account, customerFound))
                 .then(configationStrategy.validateHasCorriente(accountRepository.findByCustomerId(customerFound.get_id())));
           } else {
-            return Mono.error(() -> new ErrorResponseException(EX_ERROR_REQUEST,HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST ));
+            return Mono.error(() -> new ErrorResponseException(EX_ERROR_REQUEST, HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST));
           }
         })
         .then(Mono.just(account))

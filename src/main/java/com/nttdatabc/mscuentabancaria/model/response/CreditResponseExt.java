@@ -1,8 +1,7 @@
 package com.nttdatabc.mscuentabancaria.model.response;
 
-import java.util.List;
-
 import com.nttdatabc.mscuentabancaria.model.CreditExt;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

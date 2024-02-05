@@ -1,14 +1,16 @@
 package com.nttdatabc.mscuentabancaria.service.strategy.strategy_typeaccount;
 
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
+
 import com.nttdatabc.mscuentabancaria.model.Account;
-import com.nttdatabc.mscuentabancaria.model.response.CustomerExt;
 import com.nttdatabc.mscuentabancaria.model.enums.TypeCustomer;
+import com.nttdatabc.mscuentabancaria.model.response.CustomerExt;
 import com.nttdatabc.mscuentabancaria.service.api.CreditApiExtImpl;
 import com.nttdatabc.mscuentabancaria.utils.exceptions.errors.ErrorResponseException;
 import org.springframework.http.HttpStatus;
 import reactor.core.publisher.Mono;
 
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.*;
+
 
 /**
  * Configuration for Accounts Vip.

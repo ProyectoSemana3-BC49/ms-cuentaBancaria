@@ -295,6 +295,31 @@ paths:
         '404':
           description: Recurso no encontrado
 
+  /report/account_main_debit_card/{debit_card_id}:
+    get:
+      operationId: getAccountMainDebitCard
+      tags:
+        - Reportes
+      parameters:
+        - name: debit_card_id
+          in: path
+          description: ID de tarjeta débito
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Traer información de la cuenta principal de la tarjeta de débito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+
   /debit_card:
     get:
       operationId: getAllDebitCard

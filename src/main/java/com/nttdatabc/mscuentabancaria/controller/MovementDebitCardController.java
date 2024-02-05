@@ -1,5 +1,7 @@
 package com.nttdatabc.mscuentabancaria.controller;
 
+import static com.nttdatabc.mscuentabancaria.utils.Constantes.PREFIX_PATH;
+
 import com.nttdatabc.mscuentabancaria.controller.interfaces.MovementDebitCardControllerApi;
 import com.nttdatabc.mscuentabancaria.model.MovementDebitCard;
 import com.nttdatabc.mscuentabancaria.service.MovementDebitCardServiceImpl;
@@ -12,8 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import static com.nttdatabc.mscuentabancaria.utils.Constantes.PREFIX_PATH;
-
+/**
+ * MovementDebitCard Controller class.
+ */
 @RestController
 @RequestMapping(PREFIX_PATH)
 @Slf4j

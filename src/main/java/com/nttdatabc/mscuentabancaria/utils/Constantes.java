@@ -28,8 +28,8 @@ public class Constantes {
   public static final String EX_ERROR_LIMIT_MAX_MOVEMENTS = "LA CUENTA DE AHORRO TIENE UN MÁXIMO DE 5 MOVIMIENTOS MENSUALES, ESPERE AL OTRO MES PARA REALIZAR MOVIMIENTO";
   public static final String EX_ERROR_HAS_MOVEMENT_DAY = "Ya realizó el movimiento, recuerde que solo es 1 por día específico.";
   public static final String EX_ERROR_NOT_DAY_MOVEMENT = "Hoy no es el día especificado para hacer un movimiento en plazo fijo, recurde que son los días " + DAY_MOVEMENT_SELECTED + " de cada mes.";
-  public static final String URL_CUSTOMER_ID = "http://localhost:8081/api/v1/customer/";
-  public static final String URL_CREDIT_CUSTOMER = "http://localhost:8083/api/v1/credits/customer/";
+  public static final String URL_CUSTOMER_ID = "http://localhost:8080/api/v1/customer/";
+  public static final String URL_CREDIT_CUSTOMER = "http://localhost:8080/api/v1/credits/customer/";
   public static final Double MOUNT_MIN_OPEN_VIP = 500.0;
   public static final String EMPRESA_NOT_PERMITTED_VIP = "Se necesita ser de tipo PERSONA, para crear VIP";
   public static final String PERSONA_NOT_PERMITTED_VIP = "Se necesita ser de tipo Empresa, para crear Mype";
@@ -37,7 +37,7 @@ public class Constantes {
   public static final String MOUNT_INSUFICIENT_CREATE_VIP = "Para abrir una cuenta vip se necesita aperturarla con un mínimo de S/ 500.00 soles";
   public static final String REQUIRED_CUENTA_CORRIENTE = "Necesitas tener una cuenta corriente";
   public static final Double FEE_LIMIT_TRANSACTION = 0.05; //5%
-  public static final String URL_CREDIT_HAS_DEBT = "http://localhost:8083/api/v1/movement_credits/has_debt/";
+  public static final String URL_CREDIT_HAS_DEBT = "http://localhost:8080/api/v1/movement_credits/has_debt/";
   public static final String EX_ERROR_CUSTOMER_HAS_DEBT = "Usted no puede abrir una cuenta, porque tiene deuda";
   public static final String EX_ERROR_NUMBER_CARD_EXISTS = "Ese número de tarjeta ya existe.";
   public static final String PREFIX_NUMBER_CARD = "4213";
